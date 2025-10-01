@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS for the cracker particles and festive background */
+        /* Custom CSS for the cracker particles, rockets, diyas, stars, and festive background */
         body {
             font-family: 'Inter', sans-serif;
-            /* Rich, dark, professional background for contrast and depth */
             background: radial-gradient(circle at 50% 150%, #3a2512 0%, #100b06 80%);
             min-height: 100vh;
-            overflow-x: hidden; /* Hide horizontal overflow */
-            color: #fef3c7; /* Light text color */
+            overflow-x: hidden;
+            color: #fef3c7;
+            position: relative;
         }
-        
+
+        /* Stars in background */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.2; transform: scale(0.5); }
+        }
+
         /* Fireworks Particles */
         .cracker-particle {
             position: absolute;
@@ -28,9 +46,9 @@
             pointer-events: none;
         }
 
-        /* Keyframes for the advanced fireworks burst */
+        /* Keyframes for the fireworks burst */
         @keyframes burst {
-            0% { 
+            0% {
                 opacity: 1;
                 transform: translate(0, 0) scale(1);
             }
@@ -42,7 +60,33 @@
                 transform: translate(var(--x), var(--y)) scale(0.3);
             }
         }
-        
+
+        /* Rocket styling and animation */
+        .rocket {
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background: url('https://raw.githubusercontent.com/Ansh2597/Diya-Animation-for-Diwali-Website/main/rocket.png') no-repeat center center;
+            background-size: contain;
+            z-index: 40;
+            pointer-events: none;
+            animation: rocket-launch 3s ease-in forwards;
+        }
+
+        @keyframes rocket-launch {
+            0% {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+
         /* Custom text shadow for the main heading */
         .diwali-heading-shadow {
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.6);
@@ -55,42 +99,59 @@
             background: url('https://raw.githubusercontent.com/Ansh2597/Diya-Animation-for-Diwali-Website/main/Diya.png') no-repeat center center;
             background-size: contain;
             position: absolute;
-            bottom: 0;
             animation: glow-diya 2s infinite alternate;
-            transform-origin: bottom;
+            transform-origin: center;
             filter: drop-shadow(0 0 5px #ffd700);
         }
 
+        .diya-bottom {
+            bottom: 0;
+        }
+
+        .diya-left {
+            left: 0;
+        }
+
+        .diya-right {
+            right: 0;
+        }
+
         @keyframes glow-diya {
-            0% { transform: translateY(0); opacity: 0.9; }
-            100% { transform: translateY(-5px); opacity: 1; }
+            0% {
+                transform: translateY(0);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-5px);
+                opacity: 1;
+            }
         }
 
         /* Form styling adjustments */
         #enquiry-form input:not([type="submit"]) {
-            border: 2px solid rgba(255, 165, 0, 0.5); /* Orange border */
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
-            color: #fef3c7; /* Light text */
+            border: 2px solid rgba(255, 165, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fef3c7;
             transition: all 0.3s ease;
         }
 
         #enquiry-form input:focus {
             outline: none;
-            border-color: #ff8c00; /* Brighter orange on focus */
+            border-color: #ff8c00;
             box-shadow: 0 0 8px rgba(255, 140, 0, 0.6);
         }
-        
+
         #enquiry-form .form-label {
-            color: #fef3c7; /* Light label color */
+            color: #fef3c7;
         }
-        
+
         /* Custom button styling for the form */
         .form-button {
             background: linear-gradient(to right, #e53e3e, #d69e2e);
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
         }
-        
+
         .form-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(229, 62, 62, 0.6);
@@ -98,16 +159,51 @@
 
         /* Half-width button for the popup */
         .popup-button {
-            width: 50% !important; /* Set width to 50% of the parent container */
-            margin: 0 auto; /* Center the button */
+            width: 50% !important;
+            margin: 0 auto;
+        }
+
+        /* Popup background */
+        #offer-modal .modal-content {
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Moving offer text */
+        .offer-text {
+            position: absolute;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fef3c7;
+            text-shadow: 0 0 8px rgba(255, 140, 0, 0.8);
+            z-index: 20;
+            width: 200px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        #offer-left {
+            left: 20px;
+            background: linear-gradient(to right, #e53e3e, #d69e2e);
+        }
+
+        #offer-right {
+            right: 20px;
+            background: linear-gradient(to right, #ff8c00, #d69e2e);
         }
     </style>
 </head>
+
 <body class="flex flex-col items-center justify-center p-4">
-
+    <div id="stars-container" class="fixed inset-0 w-full h-full z-0 pointer-events-none"></div>
     <div id="cracker-container" class="fixed inset-0 w-full h-full z-10 pointer-events-none"></div>
-
-    <div id="diya-container" class="fixed inset-x-0 bottom-0 h-20 w-full z-10 pointer-events-none flex justify-around items-end"></div>
+    <div id="rocket-container" class="fixed inset-0 w-full h-full z-10 pointer-events-none"></div>
+    <div id="diya-bottom-container" class="fixed inset-x-0 bottom-0 h-20 w-full z-10 pointer-events-none flex justify-around items-end"></div>
+    <div id="diya-left-container" class="fixed inset-y-0 left-0 w-20 h-full z-10 pointer-events-none flex flex-col justify-around items-start"></div>
+    <div id="diya-right-container" class="fixed inset-y-0 right-0 w-20 h-full z-10 pointer-events-none flex flex-col justify-around items-end"></div>
+    <div id="diya-border-container" class="fixed inset-0 w-full h-full z-10 pointer-events-none"></div>
 
     <main class="text-center z-20 mt-12 md:mt-20">
         <h1 class="text-6xl md:text-9xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500 mb-6 diwali-heading-shadow animate-pulse">
@@ -118,9 +214,9 @@
         </p>
     </main>
 
-    <section class="w-full flex items-center justify-center px-4 sm:px-6 lg:px-0 z-30 my-8">
+    <section class="w-full flex items-center justify-center px-4 sm:px-6 lg:px-0 z-30 my-8 relative">
+        <div id="offer-left" class="offer-text hidden sm:block">Buy 1 Course Get 2 Courses Free</div>
         <form id="enquiry-form" class="w-full max-w-lg p-6 md:p-10 rounded-3xl shadow-[0_0_40px_rgba(255,165,0,0.8)] border-4 border-amber-500 bg-white bg-opacity-10 backdrop-blur-sm" action="https://api.web3forms.com/submit" method="POST">
-            
             <input type="hidden" name="access_key" value="5b8060c2-975a-4246-9b19-6b88ed4b5464">
             <input type="hidden" name="subject" value="Diwali_lead">
             <input type="hidden" name="source" value="diwali_page">
@@ -132,87 +228,55 @@
             <label for="name" class="block mb-1 text-base md:text-lg font-medium form-label">
                 Name
             </label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Full Name"
-                class="w-full mb-4 px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2"
-                required
-                autocomplete="off"
-            />
+            <input type="text" id="name" name="name" placeholder="Full Name" class="w-full mb-4 px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2" required autocomplete="off" />
 
             <label for="phone" class="block mb-1 text-base md:text-lg font-medium form-label">
                 Phone Number
             </label>
-            <input
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="Phone Number"
-                class="w-full mb-4 px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2"
-                required
-                autocomplete="off"
-            />
+            <input type="tel" id="phone" name="phone" placeholder="Phone Number" class="w-full mb-4 px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2" required autocomplete="off" />
 
             <label for="city" class="block mb-1 text-base md:text-lg font-medium form-label">
                 Enter City
             </label>
-            <input
-                type="text"
-                id="city"
-                name="city"
-                placeholder="Your City"
-                class="w-full mb-4 px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2"
-                autocomplete="off"
-            />
+            <input type="text" id="city" name="city" placeholder="Your City" class="w-full mb-4 px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2" autocomplete="off" />
 
             <label for="course" class="block mb-1 text-base md:text-lg font-medium form-label">
                 Enter Course
             </label>
-            <input
-                type="text"
-                id="course"
-                name="course"
-                placeholder="e.g., Cosmetology, Makeup"
-                class="w-full mb-6 px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2"
-                autocomplete="off"
-            />
+            <input type="text" id="course" name="course" placeholder="e.g., Cosmetology, Makeup" class="w-full mb-6 px-4 py-3 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2" autocomplete="off" />
 
             <button type="submit" class="form-button w-full py-4 px-6 text-white font-bold text-lg rounded-xl shadow-xl hover:translate-y-[-2px] hover:scale-[1.01]">
-                Submit Enquiry
+                Claim Offer
             </button>
 
             <div id="form-status" class="mt-4 text-center text-sm font-medium"></div>
-
         </form>
+        <div id="offer-right" class="offer-text hidden sm:block">50% Off All Courses</div>
     </section>
 
     <div id="offer-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-500 opacity-0 pointer-events-none">
-        <div class="bg-white p-6 md:p-10 rounded-3xl shadow-[0_0_40px_rgba(255,165,0,0.8)] max-w-6xl w-full mx-4 border-4 border-amber-500 transform scale-95 transition-all duration-500 relative max-h-xl" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            
-            <button onclick="document.getElementById('offer-modal').style.opacity = '0'; document.getElementById('offer-modal').style.pointerEvents = 'none';" 
-                    class="absolute top-3 right-3 p-2 text-gray-400 hover:text-gray-800 bg-gray-100 rounded-full transition-colors hover:scale-110">
+        <div class="modal-content p-6 md:p-10 rounded-3xl shadow-[0_0_40px_rgba(255,165,0,0.8)] max-w-6xl w-full mx-4 border-4 border-amber-500 transform scale-95 transition-all duration-500 relative max-h-xl" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div id="modal-cracker-container" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></div>
+            <button onclick="document.getElementById('offer-modal').style.opacity = '0'; document.getElementById('offer-modal').style.pointerEvents = 'none';" class="absolute top-3 right-3 p-2 text-gray-400 hover:text-gray-800 bg-gray-100 rounded-full transition-colors hover:scale-110">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
 
-            <div class="text-center">
-
+            <div class="text-center relative z-10">
                 <h2 id="modal-title" class="text-3xl md:text-5xl font-extrabold text-black mb-1">
-                    UK International London Beauty school
+                    UK International London Beauty School
                 </h2>
-                <h3 class="text-5xl md:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-amber-500 mb-6 diwali-heading-shadow animate-pulse">
-                    Diwali offer
+                <h3 class="text-5xl md:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-amber-500 mb-6 diwali-heading-shadow">
+                    Diwali Offer
                 </h3>
-                
+
                 <p class="text-4xl md:text-5xl font-black text-green-700 mb-2 leading-tight tracking-wider py-2">
-                    Buy 1 Course get 2 Course Free
+                    Buy 1 Course Get 2 Courses Free
                 </p>
-                
+
                 <p class="text-4xl md:text-5xl font-extrabold text-red-600 bg-yellow-100 py-2 px-6 rounded-xl inline-block shadow-lg border-2 border-red-400 transform rotate-[-2deg] mb-6">
-                    50% of all the courses
+                    50% Off All Courses
                 </p>
 
                 <button onclick="scrollToForm()" class="mt-8 inline-block py-4 px-6 bg-gradient-to-r from-orange-600 to-amber-500 text-white font-bold text-lg rounded-xl shadow-xl hover:shadow-[0_15px_30px_rgba(255,140,0,0.6)] transition duration-300 transform hover:translate-y-[-2px] hover:scale-[1.01] popup-button">
@@ -221,7 +285,6 @@
             </div>
         </div>
     </div>
-
 
     <script>
         // Get the global application ID and initial user information
@@ -232,35 +295,55 @@
          * Smoothly scrolls the page to the form section.
          */
         function scrollToForm() {
-            document.getElementById('offer-modal').style.opacity = '0'; 
+            document.getElementById('offer-modal').style.opacity = '0';
             document.getElementById('offer-modal').style.pointerEvents = 'none';
             document.getElementById('enquiry-form').scrollIntoView({ behavior: 'smooth' });
         }
 
         /**
-         * 1. Advanced Fireworks/Cracker Simulation Logic
-         * Creates multiple, scattered, and visually dynamic fireworks bursts.
+         * 1. Stars Animation Logic
+         */
+        function addStars(count = 150) {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const starsContainer = document.getElementById('stars-container');
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * width}px`;
+                star.style.top = `${Math.random() * height}px`;
+                star.style.animationDuration = `${1 + Math.random() * 2}s`;
+                star.style.opacity = Math.random();
+                starsContainer.appendChild(star);
+            }
+        }
+
+        /**
+         * 2. Advanced Fireworks/Cracker Simulation Logic
          */
         const container = document.getElementById('cracker-container');
-        const diyaContainer = document.getElementById('diya-container');
+        const rocketContainer = document.getElementById('rocket-container');
+        const modalCrackerContainer = document.getElementById('modal-cracker-container');
+        const diyaBottomContainer = document.getElementById('diya-bottom-container');
+        const diyaLeftContainer = document.getElementById('diya-left-container');
+        const diyaRightContainer = document.getElementById('diya-right-container');
+        const diyaBorderContainer = document.getElementById('diya-border-container');
 
         /**
          * Launches a single, colorful, and shadowed fireworks burst.
          * @param {number} x - X coordinate of the burst center.
          * @param {number} y - Y coordinate of the burst center.
+         * @param {HTMLElement} targetContainer - Container to append particles to.
          */
-        function launchSingleBurst(x, y) {
-            const burstColors = [
-                '#FFD700', '#FFA500', '#FF4500', '#ADFF2F', '#FFFFFF',
-                '#00BFFF', '#FF69B4', '#EE82EE'
-            ];
+        function launchSingleBurst(x, y, targetContainer) {
+            const burstColors = ['#FFD700', '#FFA500', '#FF4500', '#ADFF2F', '#FFFFFF', '#00BFFF', '#FF69B4', '#EE82EE'];
             const burstColor = burstColors[Math.floor(Math.random() * burstColors.length)];
             const particlesInBurst = Math.floor(Math.random() * 50) + 70;
 
             for (let i = 0; i < particlesInBurst; i++) {
                 const particle = document.createElement('div');
                 const size = Math.random() > 0.6 ? 8 : (Math.random() > 0.3 ? 6 : 4);
-                
+
                 particle.className = 'cracker-particle';
                 particle.style.setProperty('--size', `${size}px`);
                 particle.style.backgroundColor = burstColor;
@@ -270,7 +353,7 @@
 
                 const angle = Math.random() * 2 * Math.PI;
                 const distance = Math.random() * 350 + 150;
-                
+
                 const endX = distance * Math.cos(angle);
                 const endY = distance * Math.sin(angle);
 
@@ -278,10 +361,10 @@
                 particle.style.setProperty('--y', `${endY}px`);
 
                 const duration = Math.random() * 1.8 + 1.2;
-                particle.style.animation = `burst ${duration}s cubic-bezier(0.1, 1, 0.5, 1) forwards`; 
+                particle.style.animation = `burst ${duration}s cubic-bezier(0.1, 1, 0.5, 1) forwards`;
                 particle.style.animationDelay = `${Math.random() * 0.2}s`;
-                
-                container.appendChild(particle);
+
+                targetContainer.appendChild(particle);
 
                 setTimeout(() => {
                     particle.remove();
@@ -290,19 +373,19 @@
         }
 
         /**
-         * Orchestrates multiple bursts to create a display and ensures they repeat continuously.
+         * Orchestrates multiple bursts for the main page.
          */
         function launchCrackerEffect() {
             const width = window.innerWidth;
             const height = window.innerHeight;
-            
+
             const triggerBursts = () => {
                 const numBursts = 4;
                 for (let i = 0; i < numBursts; i++) {
                     setTimeout(() => {
                         const randX = Math.random() * (width * 0.8) + (width * 0.1);
                         const randY = Math.random() * (height * 0.4) + (height * 0.1);
-                        launchSingleBurst(randX, randY);
+                        launchSingleBurst(randX, randY, container);
                     }, i * 400);
                 }
             };
@@ -312,45 +395,195 @@
         }
 
         /**
-         * 2. Diya (Oil Lamp) Animation Logic
-         * Adds animated diya elements to the bottom of the page.
+         * Orchestrates bursts for the modal popup.
+         */
+        function launchModalCrackerEffect() {
+            const modal = document.getElementById('offer-modal');
+            const width = modal.offsetWidth;
+            const height = modal.offsetHeight;
+
+            const triggerModalBursts = () => {
+                const numBursts = 2;
+                for (let i = 0; i < numBursts; i++) {
+                    setTimeout(() => {
+                        const randX = Math.random() * (width * 0.8) + (width * 0.1);
+                        const randY = Math.random() * (height * 0.4) + (height * 0.1);
+                        launchSingleBurst(randX, randY, modalCrackerContainer);
+                    }, i * 400);
+                }
+            };
+
+            triggerModalBursts();
+            setInterval(triggerModalBursts, 4000);
+        }
+
+        /**
+         * Launches a rocket that triggers a burst at the top.
+         */
+        function launchRocket() {
+            const width = window.innerWidth;
+            const rocket = document.createElement('div');
+            rocket.className = 'rocket';
+            const startX = Math.random() * (width * 0.8) + (width * 0.1);
+            rocket.style.left = `${startX}px`;
+            rocketContainer.appendChild(rocket);
+
+            setTimeout(() => {
+                launchSingleBurst(startX, 100, container);
+                rocket.remove();
+            }, 3000);
+        }
+
+        /**
+         * Orchestrates rocket launches.
+         */
+        function launchRocketEffect() {
+            launchRocket();
+            setInterval(launchRocket, 4000);
+        }
+
+        /**
+         * Diya (Oil Lamp) Animation Logic
          */
         function addDiyas() {
-            const numberOfDiyas = Math.floor(window.innerWidth / 100); // Adjust density based on screen width
-            for (let i = 0; i < numberOfDiyas; i++) {
+            // Bottom diyas
+            const numberOfBottomDiyas = Math.floor(window.innerWidth / 100);
+            for (let i = 0; i < numberOfBottomDiyas; i++) {
                 const diya = document.createElement('div');
-                diya.className = 'diya';
+                diya.className = 'diya diya-bottom';
                 diya.style.left = `${Math.random() * 100}%`;
                 diya.style.animationDelay = `${Math.random() * 2}s`;
-                diyaContainer.appendChild(diya);
+                diyaBottomContainer.appendChild(diya);
+            }
+
+            // Left side diyas
+            const numberOfSideDiyas = Math.floor(window.innerHeight / 100);
+            for (let i = 0; i < numberOfSideDiyas; i++) {
+                const diya = document.createElement('div');
+                diya.className = 'diya diya-left';
+                diya.style.top = `${Math.random() * 100}%`;
+                diya.style.animationDelay = `${Math.random() * 2}s`;
+                diyaLeftContainer.appendChild(diya);
+            }
+
+            // Right side diyas
+            for (let i = 0; i < numberOfSideDiyas; i++) {
+                const diya = document.createElement('div');
+                diya.className = 'diya diya-right';
+                diya.style.top = `${Math.random() * 100}%`;
+                diya.style.animationDelay = `${Math.random() * 2}s`;
+                diyaRightContainer.appendChild(diya);
             }
         }
 
         /**
-         * 3. Offer Popup Logic
-         * Shows the promotional modal.
+         * Diya Border Animation Logic
+         */
+        function addDiyaBorder() {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const diyaSize = 30;
+            const margin = 5;
+
+            // Top border
+            for (let x = margin; x < screenWidth; x += diyaSize + 10) {
+                const diya = document.createElement('div');
+                diya.className = 'diya';
+                diya.style.top = `${margin}px`;
+                diya.style.left = `${x}px`;
+                diya.style.animationDelay = `${Math.random() * 2}s`;
+                diyaBorderContainer.appendChild(diya);
+            }
+
+            // Bottom border
+            for (let x = margin; x < screenWidth; x += diyaSize + 10) {
+                const diya = document.createElement('div');
+                diya.className = 'diya';
+                diya.style.bottom = `${margin}px`;
+                diya.style.left = `${x}px`;
+                diya.style.animationDelay = `${Math.random() * 2}s`;
+                diyaBorderContainer.appendChild(diya);
+            }
+
+            // Left border
+            for (let y = margin; y < screenHeight; y += diyaSize + 10) {
+                const diya = document.createElement('div');
+                diya.className = 'diya';
+                diya.style.top = `${y}px`;
+                diya.style.left = `${margin}px`;
+                diya.style.animationDelay = `${Math.random() * 2}s`;
+                diyaBorderContainer.appendChild(diya);
+            }
+
+            // Right border
+            for (let y = margin; y < screenHeight; y += diyaSize + 10) {
+                const diya = document.createElement('div');
+                diya.className = 'diya';
+                diya.style.top = `${y}px`;
+                diya.style.right = `${margin}px`;
+                diya.style.animationDelay = `${Math.random() * 2}s`;
+                diyaBorderContainer.appendChild(diya);
+            }
+        }
+
+        /**
+         * Moving Offer Text Logic
+         */
+        function moveOfferText() {
+            const offerLeft = document.getElementById('offer-left');
+            const offerRight = document.getElementById('offer-right');
+            let leftY = 100;
+            let rightY = 100;
+            let leftSpeed = 2;
+            let rightSpeed = -2;
+
+            function updatePosition() {
+                const maxY = window.innerHeight - 150; // Adjust for text height
+                const minY = 50; // Keep text within viewport
+
+                leftY += leftSpeed;
+                rightY += rightSpeed;
+
+                if (leftY >= maxY || leftY <= minY) {
+                    leftSpeed = -leftSpeed; // Reverse direction
+                }
+                if (rightY >= maxY || rightY <= minY) {
+                    rightSpeed = -rightSpeed; // Reverse direction
+                }
+
+                offerLeft.style.top = `${leftY}px`;
+                offerRight.style.top = `${rightY}px`;
+
+                requestAnimationFrame(updatePosition);
+            }
+
+            updatePosition();
+        }
+
+        /**
+         * Offer Popup Logic
          */
         function showDiwaliOffer() {
             const modal = document.getElementById('offer-modal');
-            const modalContent = modal.querySelector('div');
+            const modalContent = modal.querySelector('.modal-content');
 
             setTimeout(() => {
                 modal.style.opacity = '1';
                 modal.style.pointerEvents = 'auto';
                 modalContent.style.transform = 'scale(1)';
+                launchModalCrackerEffect();
             }, 600);
         }
 
         /**
-         * 4. Form Submission Logic
-         * Handles the form submission and displays status messages.
+         * Form Submission Logic
          */
         document.getElementById('enquiry-form').addEventListener('submit', async function (event) {
             event.preventDefault();
             const form = event.target;
             const formData = new FormData(form);
             const statusDiv = document.getElementById('form-status');
-            
+
             const name = formData.get("name").trim();
             const phone = formData.get("phone").trim();
             const city = formData.get("city").trim();
@@ -390,9 +623,9 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    statusDiv.className = 'mt-4 text-center text-green-400';
-                    statusDiv.textContent = 'Form Submitted Successfully!';
-                    form.reset();
+                    const formSection = document.querySelector('section');
+                    formSection.remove();
+                    window.location.href = 'thank-you.html';
                 } else {
                     console.log("Error", data);
                     statusDiv.className = 'mt-4 text-center text-red-400';
@@ -406,10 +639,14 @@
         });
 
         // --- Initialization ---
-        window.onload = function() {
+        window.onload = function () {
+            addStars();
             launchCrackerEffect();
+            launchRocketEffect();
             addDiyas();
-            showDiwaliOffer(); // Show the popup modal automatically on page load
+            addDiyaBorder();
+            showDiwaliOffer();
+            moveOfferText();
         };
     </script>
 </body>

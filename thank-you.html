@@ -120,6 +120,7 @@
             <a href="https://www.facebook.com/ukInternationallondonbeautyschool" target="_blank" class="social-link bg-gradient-to-r from-blue-600 to-amber-500 text-white font-bold text-lg py-3 px-6 rounded-xl shadow-xl transition duration-300">Visit Our Facebook</a>
         </div>
         <a href="index.html" class="back-button bg-gradient-to-r from-orange-600 to-amber-500 text-white font-bold text-lg py-3 px-6 rounded-xl shadow-xl transition duration-300">Back to Offer</a>
+        <p class="text-lg md:text-xl text-yellow-200 mt-8">Redirecting to our main website in <span id="countdown">5</span> seconds...</p>
     </main>
 
     <script>
@@ -299,12 +300,28 @@
             }
         }
 
+        // ---------------- Redirect Countdown ----------------
+        function startRedirectCountdown() {
+            let timeLeft = 5;
+            const countdownElement = document.getElementById('countdown');
+
+            const countdownInterval = setInterval(() => {
+                timeLeft--;
+                countdownElement.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = 'https://www.uk-international.com/';
+                }
+            }, 1000);
+        }
+
         window.onload = function () {
             addStars(150);          // stars
             launchCrackerEffect();  // crackers
             launchRocketEffect();   // rockets
             addDiyas();             // inner diyas
             addDiyaBorder();        // border diyas
+            startRedirectCountdown(); // start redirect countdown
         };
     </script>
 </body>

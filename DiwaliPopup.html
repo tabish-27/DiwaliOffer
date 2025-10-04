@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diwali Offer Popup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 50% 150%, #3a2512 0%, #100b06 80%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #fef3c7;
+      position: relative;
+    }
+
+    .diwali-heading-shadow {
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.6);
+    }
+
+    .cracker-particle {
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      border-radius: 50%;
+      opacity: 0;
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    @keyframes burst {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(0.3);
+      }
+    }
+
+    #offer-modal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    #offer-modal .modal-content {
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 700px;
+      width: 95%;
+      min-height: 300px;
+      box-shadow: 0 0 20px rgba(255, 165, 0, 0.8);
+      border: 4px solid #f59e0b;
+    }
+
+    #offer-modal .modal-content button {
+      width: auto;
+      margin: 0;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      padding: 2px;
+      background-color: #f3f4f6;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+    }
+
+    .countdown-text {
+      color: #ff4500;
+      font-weight: bold;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modal -->
+  <div id="offer-modal" class="fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-500">
+    <div class="modal-content p-6 md:p-10 rounded-3xl shadow-[0_0_40px_rgba(255,165,0,0.8)] max-w-6xl w-full mx-4 border-4 border-amber-500 transform scale-95 transition-all duration-500 relative max-h-xl" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+      <div id="modal-cracker-container" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></div>
+
+      <!-- Close Button -->
+      <button onclick="handleClose()" class="close-button" aria-label="Close popup">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Content -->
+      <div class="text-center relative z-10">
+        <h2 id="modal-title" class="text-3xl md:text-5xl font-extrabold text-black mb-1">
+          UK International London Beauty School
+        </h2>
+        <h3 class="text-5xl md:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-amber-500 mb-6 diwali-heading-shadow">
+          Diwali Offer
+        </h3>
+        <p class="text-4xl md:text-5xl font-black text-green-700 mb-2 leading-tight tracking-wider py-2">
+          Buy 1 Course Get 2 Courses Free
+        </p>
+        <p class="text-4xl md:text-5xl font-extrabold text-red-600 bg-yellow-100 py-2 px-6 rounded-xl inline-block shadow-lg border-2 border-red-400 transform rotate-[-2deg] mb-6">
+          50% Off All Courses
+        </p>
+        <p>
+          <button onclick="handleEnrollNow()" class="mt-8 inline-block py-4 px-6 bg-gradient-to-r from-orange-600 to-amber-500 text-white font-bold text-lg rounded-xl shadow-xl hover:shadow-[0_15px_30px_rgba(255,140,0,0.6)] transition duration-300 transform hover:translate-y-[-2px] hover:scale-[1.01] popup-button">
+            Enroll Now
+          </button>
+        </p>
+        <p class="countdown-text" id="countdown-text">
+          Popup will close in 5 seconds...
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let countdown = 5;
+    let interval = setInterval(() => {
+      countdown--;
+      document.getElementById("countdown-text").innerText = "Popup will close in " + countdown + " seconds...";
+      if (countdown <= 0) {
+        clearInterval(interval);
+        handleClose();
+      }
+    }, 1000);
+
+    function handleEnrollNow() {
+      window.location.href = "/diwali_main.html";
+    }
+
+    function handleClose() {
+      document.getElementById("offer-modal").style.display = "none";
+      window.location.href = "/"; // redirect to home page
+    }
+
+    // Crackers effect
+    function launchSingleBurst(x, y, targetContainer) {
+      const burstColors = ["#FFD700","#FFA500","#FF4500","#ADFF2F","#FFFFFF","#00BFFF","#FF69B4","#EE82EE"];
+      const burstColor = burstColors[Math.floor(Math.random() * burstColors.length)];
+      const particlesInBurst = Math.floor(Math.random() * 50) + 70;
+      for (let i = 0; i < particlesInBurst; i++) {
+        const particle = document.createElement("div");
+        const size = Math.random() > 0.6 ? 8 : Math.random() > 0.3 ? 6 : 4;
+        particle.className = "cracker-particle";
+        particle.style.setProperty("--size", `${size}px`);
+        particle.style.backgroundColor = burstColor;
+        particle.style.boxShadow = `0 0 4px ${burstColor}, 0 0 8px ${burstColor}`;
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 350 + 150;
+        const endX = distance * Math.cos(angle);
+        const endY = distance * Math.sin(angle);
+        particle.style.setProperty("--x", `${endX}px`);
+        particle.style.setProperty("--y", `${endY}px`);
+        const duration = Math.random() * 1.8 + 1.2;
+        particle.style.animation = `burst ${duration}s cubic-bezier(0.1, 1, 0.5, 1) forwards`;
+        particle.style.animationDelay = `${Math.random() * 0.2}s`;
+        targetContainer.appendChild(particle);
+        setTimeout(() => particle.remove(), duration * 1000 + 500);
+      }
+    }
+
+    function launchModalCrackerEffect() {
+      const modal = document.getElementById("offer-modal");
+      const width = modal.offsetWidth;
+      const height = modal.offsetHeight;
+      const triggerModalBursts = () => {
+        const numBursts = 2;
+        for (let i = 0; i < numBursts; i++) {
+          setTimeout(() => {
+            const randX = Math.random() * (width * 0.8) + width * 0.1;
+            const randY = Math.random() * (height * 0.4) + height * 0.1;
+            launchSingleBurst(randX, randY, document.getElementById("modal-cracker-container"));
+          }, i * 400);
+        }
+      };
+      triggerModalBursts();
+      setInterval(triggerModalBursts, 4000);
+    }
+
+    launchModalCrackerEffect();
+  </script>
+</body>
+</html>
